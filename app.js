@@ -86,7 +86,7 @@ function render() {
 
 // ── Tracks list view ──────────────────────────────────────────────────────────
 
-function renderTracksView(animate) {
+function renderTracksView(animate, swipeDir) {
   const filtered = TRACKS.filter(t => {
     const matchTag = state.filter === 'ALL' || t.tag === state.filter;
     const q = state.search.toLowerCase();
@@ -135,6 +135,12 @@ function renderTracksView(animate) {
       wrap.insertBefore(canvas, wrap.firstChild);
     }
   });
+
+  // Slide-in animation after filter swipe
+  if (swipeDir) {
+    const list = document.querySelector('.tracks-list');
+    if (list) list.classList.add(swipeDir === 'left' ? 'slide-from-right' : 'slide-from-left');
+  }
 
   // Events
   document.getElementById('search-input').addEventListener('input', e => {
@@ -295,34 +301,73 @@ function showToast(msg) {
 // ── Swipe navigation ─────────────────────────────────────────────────────────
 
 function setupSwipe() {
-  let x0 = null, y0 = null;
+  let x0 = null, y0 = null, axis = null, busy = false;
 
   document.addEventListener('touchstart', e => {
+    if (busy) return;
     x0 = e.touches[0].clientX;
     y0 = e.touches[0].clientY;
+    axis = null;
   }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (x0 === null || busy) return;
+    const dx = e.touches[0].clientX - x0;
+    const dy = e.touches[0].clientY - y0;
+
+    // Determine axis once we have 12px of movement
+    if (axis === null && Math.hypot(dx, dy) > 12) {
+      axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    }
+    if (axis !== 'h') return;
+    e.preventDefault(); // block scroll while tracking horizontal drag
+
+    if (state.view === 'tracks') {
+      const list = document.querySelector('.tracks-list');
+      if (list) {
+        list.style.transition = 'none';
+        list.style.transform = `translateX(${dx * 0.35}px)`;
+        list.style.opacity = String(Math.max(0.25, 1 - Math.abs(dx) / 260));
+      }
+    }
+  }, { passive: false });
 
   document.addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
-    const dy = e.changedTouches[0].clientY - y0;
     x0 = null;
-    y0 = null;
 
-    // Require mostly-horizontal swipe (dx dominates dy) and minimum distance
-    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+    if (axis !== 'h') return;
 
     if (state.view === 'tracks') {
       const idx = TAG_FILTERS.indexOf(state.filter);
-      if (dx < 0 && idx < TAG_FILTERS.length - 1) {
-        state.filter = TAG_FILTERS[idx + 1];
-        renderTracksView(false);
-        scrollActiveFilter();
-      } else if (dx > 0 && idx > 0) {
-        state.filter = TAG_FILTERS[idx - 1];
-        renderTracksView(false);
-        scrollActiveFilter();
+      const canNext = dx < -50 && idx < TAG_FILTERS.length - 1;
+      const canPrev = dx > 50 && idx > 0;
+      const list = document.querySelector('.tracks-list');
+
+      if (canNext || canPrev) {
+        // Snap current list out, then slide new one in
+        busy = true;
+        if (list) {
+          list.style.transition = 'transform 0.16s ease-in, opacity 0.16s ease-in';
+          list.style.transform = `translateX(${dx < 0 ? '-110%' : '110%'})`;
+          list.style.opacity = '0';
+        }
+        setTimeout(() => {
+          state.filter = TAG_FILTERS[canNext ? idx + 1 : idx - 1];
+          renderTracksView(false, canNext ? 'left' : 'right');
+          scrollActiveFilter();
+          busy = false;
+        }, 160);
+      } else {
+        // Snap back
+        if (list) {
+          list.style.transition = 'transform 0.22s ease, opacity 0.22s ease';
+          list.style.transform = '';
+          list.style.opacity = '';
+        }
       }
+
     } else if (state.view === 'track' && dx > 60) {
       state.view = 'tracks';
       render();
