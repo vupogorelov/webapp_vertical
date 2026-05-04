@@ -1,0 +1,492 @@
+:root {
+  --bg: #F0F2F8;
+  --card-bg: #FFFFFF;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --border: #E5E7EB;
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.07);
+  --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --radius-card: 18px;
+  --radius-pill: 999px;
+  --accent: #5B5BD6;
+  --green: #00C853;
+  --green-dark: #00A846;
+  --header-h: 56px;
+  --max-w: 700px;
+  --thumb-size: 100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ── Layout ─────────────────────────────── */
+
+.app-shell {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+}
+
+/* ── Header ─────────────────────────────── */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: -8px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.btn-back:hover { background: rgba(0,0,0,0.06); }
+
+.header-spacer {
+  width: 40px;
+}
+
+/* ── Search ─────────────────────────────── */
+
+.search-wrap {
+  padding: 0 16px 12px;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+  display: flex;
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+  background: #E8EBF2;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 0 16px 0 44px;
+  font-size: 16px;
+  color: var(--text-primary);
+  outline: none;
+  transition: background 0.15s;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { background: #DDE0EB; }
+
+/* ── Filter Tabs ────────────────────────── */
+
+.filter-wrap {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.filter-wrap::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+  flex-shrink: 0;
+  height: 38px;
+  padding: 0 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+}
+.filter-btn:hover { background: rgba(0,0,0,0.06); }
+.filter-btn.active {
+  background: var(--text-primary);
+  color: #FFFFFF;
+}
+
+/* ── Track List ─────────────────────────── */
+
+.tracks-list {
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.track-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.track-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+.track-card:active { transform: scale(0.98); }
+
+.track-thumb {
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  border-radius: 14px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.track-thumb canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.track-icon-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 15px;
+  padding: 40px 0;
+}
+
+/* ── Track Detail View ──────────────────── */
+
+.track-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.track-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+}
+
+.track-hero-thumb {
+  width: 140px;
+  height: 140px;
+  border-radius: 18px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.track-hero-thumb canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.track-hero-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.track-hero-title {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.track-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.track-description-wrap {
+  padding: 0 16px 16px;
+}
+
+.track-description {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.track-description.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.read-more-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 4px 16px 10px;
+}
+
+/* ── Course Accordion ───────────────────── */
+
+.courses-list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 100px;
+}
+
+.course-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.course-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.course-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.course-card.expanded .course-num {
+  background: var(--text-primary);
+  color: #fff;
+}
+
+.course-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+}
+.course-card.expanded .chevron { transform: rotate(180deg); }
+
+.course-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+.course-card.expanded .course-body {
+  grid-template-rows: 1fr;
+}
+
+.course-body-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.course-body-content {
+  padding: 0 16px 16px 64px;
+}
+
+.course-duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.course-desc {
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.btn-start {
+  display: block;
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+              linear-gradient(135deg, #667eea, #764ba2) border-box;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-start:hover { opacity: 0.85; }
+.btn-start:active { transform: scale(0.97); }
+
+/* ── Bottom CTA ─────────────────────────── */
+
+.bottom-cta {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-w);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+  z-index: 20;
+}
+
+.btn-track-start {
+  display: block;
+  width: 100%;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--green);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+.btn-track-start:hover { background: var(--green-dark); }
+.btn-track-start:active { transform: scale(0.98); }
+
+/* ── Views ──────────────────────────────── */
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Icons (inline SVG helpers) ─────────── */
+.icon { display: inline-flex; align-items: center; }
+
+/* ── Desktop tweaks ─────────────────────── */
+@media (min-width: 600px) {
+  :root {
+    --thumb-size: 110px;
+    --header-h: 60px;
+  }
+
+  .track-title { font-size: 20px; }
+
+  .track-hero-thumb {
+    width: 160px;
+    height: 160px;
+  }
+
+  .track-hero-title { font-size: 26px; }
+
+  .courses-list { padding-bottom: 110px; }
+
+  .btn-track-start { font-size: 19px; }
+}
+
+@media (min-width: 700px) {
+  .app-shell {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+}
+
+/* ── Transition helpers ──────────────────── */
+
+.fade-enter {
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
