@@ -292,6 +292,49 @@ function showToast(msg) {
   setTimeout(() => toast.remove(), 2200);
 }
 
+// ── Swipe navigation ─────────────────────────────────────────────────────────
+
+function setupSwipe() {
+  let x0 = null, y0 = null;
+
+  document.addEventListener('touchstart', e => {
+    x0 = e.touches[0].clientX;
+    y0 = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    x0 = null;
+    y0 = null;
+
+    // Require mostly-horizontal swipe (dx dominates dy) and minimum distance
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+
+    if (state.view === 'tracks') {
+      const idx = TAG_FILTERS.indexOf(state.filter);
+      if (dx < 0 && idx < TAG_FILTERS.length - 1) {
+        state.filter = TAG_FILTERS[idx + 1];
+        renderTracksView(false);
+        scrollActiveFilter();
+      } else if (dx > 0 && idx > 0) {
+        state.filter = TAG_FILTERS[idx - 1];
+        renderTracksView(false);
+        scrollActiveFilter();
+      }
+    } else if (state.view === 'track' && dx > 60) {
+      state.view = 'tracks';
+      render();
+    }
+  }, { passive: true });
+}
+
+function scrollActiveFilter() {
+  const btn = document.querySelector('.filter-btn.active');
+  if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
 // ── Utils ─────────────────────────────────────────────────────────────────────
 
 function escHtml(s) {
@@ -300,4 +343,5 @@ function escHtml(s) {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
+setupSwipe();
 render();
