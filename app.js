@@ -69,7 +69,7 @@ function getIconOverlay(iconKey) {
 const state = {
   view: 'tracks',       // 'tracks' | 'track'
   activeTrack: null,
-  filter: 'ALL',
+  filter: 'Главное',
   search: '',
   expandedCourse: null,
   descExpanded: false,
@@ -88,7 +88,7 @@ function render() {
 
 function renderTracksView(animate, swipeDir) {
   const filtered = TRACKS.filter(t => {
-    const matchTag = state.filter === 'ALL' || t.tag === state.filter;
+    const matchTag = state.filter === 'Главное' || t.tag === state.filter;
     const q = state.search.toLowerCase();
     const matchSearch = !q || t.title.toLowerCase().includes(q) || t.tag.toLowerCase().includes(q);
     return matchTag && matchSearch;

@@ -4,7 +4,7 @@ const TRACKS = [
   {
     id: 'python-data-fundamentals',
     title: 'Python Data Fundamentals',
-    tag: 'Python',
+    tag: 'Уроки',
     palette: ['#6B4C9A', '#8B6FCC', '#4A2D7F', '#2E7D32', '#4CAF50', '#1B1035', '#3D2870'],
     icon: 'python',
     courseCount: 8,
@@ -23,7 +23,7 @@ const TRACKS = [
   {
     id: 'ai-fundamentals',
     title: 'AI Fundamentals',
-    tag: 'Theory',
+    tag: 'Спринты',
     palette: ['#3D3D00', '#5C5C00', '#4A4A10', '#1A5C1A', '#2E7D32', '#4CAF50', '#222200'],
     icon: 'brain',
     courseCount: 6,
@@ -40,7 +40,7 @@ const TRACKS = [
   {
     id: 'sql-fundamentals',
     title: 'SQL Fundamentals',
-    tag: 'SQL',
+    tag: 'Уроки',
     palette: ['#B85C00', '#D4691A', '#A04500', '#8B3A00', '#C47A35', '#6B2D00', '#E8824A'],
     icon: 'sql',
     courseCount: 5,
@@ -56,7 +56,7 @@ const TRACKS = [
   {
     id: 'associate-data-scientist-python',
     title: 'Associate Data Scientist in Python',
-    tag: 'Python',
+    tag: 'Проекты',
     palette: ['#4B3AB5', '#6655CC', '#3A2A99', '#1E1466', '#7B6FDD', '#2D22A3', '#523EBF'],
     icon: 'python',
     courseCount: 8,
@@ -75,7 +75,7 @@ const TRACKS = [
   {
     id: 'associate-data-analyst-sql',
     title: 'Associate Data Analyst in SQL',
-    tag: 'SQL',
+    tag: 'Проекты',
     palette: ['#C06000', '#A84E00', '#D97020', '#7A3A00', '#B86A1A', '#8C4400', '#E08030'],
     icon: 'sql',
     courseCount: 8,
@@ -94,7 +94,7 @@ const TRACKS = [
   {
     id: 'r-programming-fundamentals',
     title: 'R Programming Fundamentals',
-    tag: 'R',
+    tag: 'Уроки',
     palette: ['#1A4A8A', '#1E5FA0', '#0D3366', '#2673B8', '#155090', '#0A2744', '#1D5C9E'],
     icon: 'r',
     courseCount: 6,
@@ -111,7 +111,7 @@ const TRACKS = [
   {
     id: 'theory-statistics',
     title: 'Statistics Fundamentals',
-    tag: 'Theory',
+    tag: 'Тренинги',
     palette: ['#4A1A6B', '#6B3A8C', '#3A0A55', '#7A4AAC', '#5A2A7B', '#2A0040', '#603285'],
     icon: 'chart',
     courseCount: 5,
@@ -126,4 +126,4 @@ const TRACKS = [
   },
 ];
 
-const TAG_FILTERS = ['ALL', 'Python', 'R', 'SQL', 'Theory'];
+const TAG_FILTERS = ['Главное', 'Уроки', 'Спринты', 'Тренинги', 'Проекты'];
