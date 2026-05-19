@@ -15,7 +15,6 @@
   --header-h: 56px;
   --max-w: 700px;
   --thumb-size: 104px;
-  --nav-h: 60px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -79,6 +78,43 @@ body {
 
 .header-spacer { width: 40px; }
 
+/* ── Section Tabs (top-level navigation) ─── */
+
+.section-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 4px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.section-tabs::-webkit-scrollbar { display: none; }
+
+.section-tab {
+  flex-shrink: 0;
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.section-tab:hover { background: rgba(0,0,0,0.06); }
+.section-tab.active {
+  background: var(--text-primary);
+  color: #FFFFFF;
+}
+
 /* ── Search ─────────────────────────────── */
 
 .search-wrap {
@@ -114,7 +150,7 @@ body {
 .search-input::placeholder { color: var(--text-muted); }
 .search-input:focus { background: #E0E3EA; }
 
-/* ── Filter Tabs ────────────────────────── */
+/* ── Filter Tabs (inside Tracks view) ──── */
 
 .filter-wrap {
   display: flex;
@@ -307,7 +343,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-bottom: calc(var(--nav-h) + 100px);
+  padding-bottom: 100px;
 }
 
 .course-card {
@@ -414,7 +450,7 @@ body {
 
 .bottom-cta {
   position: fixed;
-  bottom: var(--nav-h);
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -446,7 +482,7 @@ body {
 .view { display: none; }
 .view.active { display: block; }
 
-/* ── Icons (inline SVG helpers) ─────────── */
+/* ── Icons ──────────────────────────────── */
 .icon { display: inline-flex; align-items: center; }
 
 /* ── Desktop tweaks ─────────────────────── */
@@ -455,18 +491,10 @@ body {
     --thumb-size: 110px;
     --header-h: 60px;
   }
-
   .track-title { font-size: 20px; }
-
-  .track-hero-thumb {
-    width: 160px;
-    height: 160px;
-  }
-
+  .track-hero-thumb { width: 160px; height: 160px; }
   .track-hero-title { font-size: 26px; }
-
   .courses-list { padding-bottom: 110px; }
-
   .btn-track-start { font-size: 19px; }
 }
 
@@ -477,7 +505,7 @@ body {
   }
 }
 
-/* ── Transition helpers ──────────────────── */
+/* ── Transitions ────────────────────────── */
 
 .fade-enter { animation: fadeIn 0.18s ease; }
 
@@ -498,60 +526,11 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ── Bottom Navigation ──────────────────── */
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: var(--max-w);
-  height: var(--nav-h);
-  background: var(--card-bg);
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: stretch;
-  z-index: 30;
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-muted);
-  padding: 6px 2px;
-  -webkit-tap-highlight-color: transparent;
-  transition: color 0.15s;
-}
-
-.nav-item.active { color: var(--accent); }
-.nav-item:active { opacity: 0.7; }
-
-.nav-icon { display: flex; align-items: center; }
-.nav-icon svg { width: 22px; height: 22px; }
-
-.nav-label {
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
 /* ── Section List ───────────────────────── */
 
 .section-content {
   padding: 16px;
-  padding-bottom: calc(var(--nav-h) + 16px);
+  padding-bottom: 32px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -621,8 +600,7 @@ body {
 /* ── Article ────────────────────────────── */
 
 .article-content {
-  padding: 24px 16px;
-  padding-bottom: calc(var(--nav-h) + 24px);
+  padding: 24px 16px 32px;
 }
 
 .article-placeholder {
@@ -640,16 +618,3 @@ body {
 }
 
 .article-body-p:last-child { margin-bottom: 0; }
-
-/* ── Tracks list padding ────────────────── */
-
-.tracks-list {
-  padding-bottom: calc(var(--nav-h) + 24px);
-}
-
-/* ── Desktop nav ────────────────────────── */
-
-@media (min-width: 600px) {
-  :root { --nav-h: 64px; }
-  .nav-label { font-size: 11px; }
-}

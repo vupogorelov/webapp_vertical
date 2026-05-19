@@ -54,12 +54,6 @@ const ICONS = {
   sql: `<text>SQL</text>`,
   r: `<text>R</text>`,
   chart: `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
-  // Bottom nav icons
-  home: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
-  bookOpen: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
-  zap: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-  timer: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/></svg>`,
-  folder: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
 };
 
 function getIconOverlay(iconKey) {
@@ -84,39 +78,35 @@ const state = {
   descExpanded: false,
 };
 
-// ── App shell ─────────────────────────────────────────────────────────────────
-
 const $app = document.getElementById('app');
 
 function render() {
   switch (state.view) {
-    case 'tracks': renderTracksView(true); break;
-    case 'track':  renderTrackView();      break;
-    case 'article': renderArticleView();   break;
-    default:       renderSectionView();
+    case 'tracks':  renderTracksView(true); break;
+    case 'track':   renderTrackView();      break;
+    case 'article': renderArticleView();    break;
+    default:        renderSectionView();
   }
 }
 
-// ── Bottom Navigation ─────────────────────────────────────────────────────────
+// ── Section Tabs ──────────────────────────────────────────────────────────────
 
-const NAV_ITEMS = [
-  { id: 'home',       label: 'Главная',   icon: 'home' },
-  { id: 'learning',   label: 'Обучение',  icon: 'bookOpen' },
-  { id: 'intensives', label: 'Интенсивы', icon: 'zap' },
-  { id: 'sprints',    label: 'Спринты',   icon: 'timer' },
-  { id: 'projects',   label: 'Проекты',   icon: 'folder' },
+const SECTIONS = [
+  { id: 'home',       label: 'Главная' },
+  { id: 'learning',   label: 'Обучение' },
+  { id: 'intensives', label: 'Интенсивы' },
+  { id: 'sprints',    label: 'Спринты' },
+  { id: 'projects',   label: 'Проекты' },
 ];
 
-function navHtml() {
-  return `<nav class="bottom-nav">${NAV_ITEMS.map(n => `
-    <button class="nav-item${state.section === n.id ? ' active' : ''}" data-section="${n.id}">
-      <span class="nav-icon">${ICONS[n.icon]}</span>
-      <span class="nav-label">${n.label}</span>
-    </button>`).join('')}</nav>`;
+function sectionTabsHtml() {
+  return `<div class="section-tabs">${SECTIONS.map(s =>
+    `<button class="section-tab${state.section === s.id ? ' active' : ''}" data-section="${s.id}">${s.label}</button>`
+  ).join('')}</div>`;
 }
 
-function bindNav() {
-  document.querySelectorAll('.nav-item').forEach(btn => {
+function bindSectionTabs() {
+  document.querySelectorAll('.section-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       const s = btn.dataset.section;
       if (state.section === s && state.view === 'section') return;
@@ -152,13 +142,8 @@ function renderSectionView() {
   $app.innerHTML = `
     <div class="app-shell">
       <div class="view active fade-enter">
-        <header class="header">
-          <div class="header-spacer"></div>
-          <h1 class="header-title">${sd.title}</h1>
-          <div class="header-spacer"></div>
-        </header>
+        ${sectionTabsHtml()}
         <div class="section-content">${groups}</div>
-        ${navHtml()}
       </div>
     </div>`;
 
@@ -175,7 +160,7 @@ function renderSectionView() {
     });
   });
 
-  bindNav();
+  bindSectionTabs();
 }
 
 // ── Article View ──────────────────────────────────────────────────────────────
@@ -204,7 +189,6 @@ function renderArticleView() {
         <div class="article-content">
           ${bodyHtml}
         </div>
-        ${navHtml()}
       </div>
     </div>`;
 
@@ -213,8 +197,6 @@ function renderArticleView() {
     state.activeArticle = null;
     render();
   });
-
-  bindNav();
 }
 
 // ── Tracks list view ──────────────────────────────────────────────────────────
@@ -257,7 +239,6 @@ function renderTracksView(animate, swipeDir) {
         </div>
         <div class="filter-wrap">${filterBtns}</div>
         <div class="tracks-list">${cards}</div>
-        ${navHtml()}
       </div>
     </div>`;
 
@@ -305,8 +286,6 @@ function renderTracksView(animate, swipeDir) {
       render();
     });
   });
-
-  bindNav();
 }
 
 // ── Track detail view ─────────────────────────────────────────────────────────
@@ -370,7 +349,6 @@ function renderTrackView() {
         <div class="bottom-cta">
           <button class="btn-track-start">Start Track</button>
         </div>
-        ${navHtml()}
       </div>
     </div>`;
 
@@ -409,8 +387,6 @@ function renderTrackView() {
   document.querySelector('.btn-track-start').addEventListener('click', () => {
     showToast('Starting track: ' + track.title);
   });
-
-  bindNav();
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -423,7 +399,7 @@ function showToast(msg) {
   toast.id = 'toast';
   toast.textContent = msg;
   Object.assign(toast.style, {
-    position: 'fixed', bottom: 'calc(var(--nav-h, 60px) + 20px)', left: '50%',
+    position: 'fixed', bottom: '20px', left: '50%',
     transform: 'translateX(-50%)',
     background: 'rgba(17,24,39,0.9)', color: '#fff', padding: '10px 20px',
     borderRadius: '999px', fontSize: '14px', fontWeight: '500',
@@ -435,7 +411,7 @@ function showToast(msg) {
   setTimeout(() => toast.remove(), 2200);
 }
 
-// ── Swipe navigation ─────────────────────────────────────────────────────────
+// ── Swipe navigation ──────────────────────────────────────────────────────────
 
 function setupSwipe() {
   let x0 = null, y0 = null, axis = null, busy = false;
