@@ -65,6 +65,12 @@ function getIconOverlay(iconKey) {
   return ICONS[iconKey] || '';
 }
 
+// ── Runtime data (populated by init() from content.md) ───────────────────────
+
+let SITE_MAP = {};
+let CONTENT  = {};
+let SECTIONS = [];
+
 // ── State ─────────────────────────────────────────────────────────────────────
 
 const state = {
@@ -91,13 +97,6 @@ function render() {
 
 // ── Section Tabs ──────────────────────────────────────────────────────────────
 
-const SECTIONS = [
-  { id: 'home',       label: 'Главная' },
-  { id: 'learning',   label: 'Обучение' },
-  { id: 'intensives', label: 'Интенсивы' },
-  { id: 'sprints',    label: 'Спринты' },
-  { id: 'projects',   label: 'Проекты' },
-];
 
 function sectionTabsHtml() {
   return `<div class="section-tabs">${SECTIONS.map(s =>
@@ -498,5 +497,25 @@ function escHtml(s) {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
+// ── Init (async: fetch → parse → render) ─────────────────────────────────────
+
+async function init() {
+  $app.innerHTML = '<div style="height:100vh;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:15px">Загрузка...</div>';
+  try {
+    const text = await fetch('content.md').then(r => {
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    });
+    const data = buildData(parseMarkdown(text));
+    SITE_MAP = data.siteMap;
+    CONTENT  = data.content;
+    SECTIONS = data.sectionOrder.map(id => ({ id, label: SITE_MAP[id].title }));
+  } catch (e) {
+    $app.innerHTML = '<div style="height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;color:var(--text-muted);font-size:15px">Не удалось загрузить content.md.<br>Откройте через HTTP-сервер.</div>';
+    return;
+  }
+  render();
+}
+
 setupSwipe();
-render();
+init();
