@@ -126,28 +126,28 @@ function bindSectionTabs() {
 function renderSectionView() {
   const sd = SITE_MAP[state.section];
 
-  const groups = sd.groups.map(g => {
-    const header = g.title ? `<div class="list-group-header">${g.title}</div>` : '';
+  const cards = sd.groups.map(g => {
+    const header = g.title ? `<p class="items-section-label">${g.title}</p>` : '';
     const items = g.items.map(item => `
-      <div class="list-item" data-id="${item.id}" data-action="${item.action || 'article'}">
-        <div class="list-item-text">
-          <span class="list-item-title">${item.title}</span>
-          ${item.subtitle ? `<span class="list-item-sub">${item.subtitle}</span>` : ''}
+      <div class="item-card" data-id="${item.id}" data-action="${item.action || 'article'}">
+        <div class="item-card-text">
+          <div class="item-card-title">${item.title}</div>
+          ${item.subtitle ? `<div class="item-card-sub">${item.subtitle}</div>` : ''}
         </div>
         <span class="list-chevron">${ICONS.chevronRight}</span>
       </div>`).join('');
-    return `<div class="list-group">${header}<div class="list-group-items">${items}</div></div>`;
+    return header + items;
   }).join('');
 
   $app.innerHTML = `
     <div class="app-shell">
       <div class="view active fade-enter">
         ${sectionTabsHtml()}
-        <div class="section-content">${groups}</div>
+        <div class="items-list">${cards}</div>
       </div>
     </div>`;
 
-  document.querySelectorAll('.list-item').forEach(el => {
+  document.querySelectorAll('.item-card').forEach(el => {
     el.addEventListener('click', () => {
       if (el.dataset.action === 'tracks') {
         state.view = 'tracks';
