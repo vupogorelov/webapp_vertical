@@ -46,6 +46,7 @@ const ICONS = {
   back: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,
   search: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
   chevron: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+  chevronRight: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
   clock: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
   book: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
   python: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M12 2C9.2 2 7.5 3.2 7.5 5V7H12V7.5H5C3.1 7.5 2 9 2 11.5 2 14 3.1 15.5 5 15.5H6.5V13C6.5 11 7.8 9.5 10 9.5H14C15.9 9.5 17 8.4 17 6.5V5C17 3.2 15.2 2 12 2ZM10.5 5.5C10.5 5 10.8 4.5 11.5 4.5 12.2 4.5 12.5 5 12.5 5.5 12.5 6 12.2 6.5 11.5 6.5 10.8 6.5 10.5 6 10.5 5.5Z" fill="rgba(255,255,255,0.9)"/><path d="M12 22C14.8 22 16.5 20.8 16.5 19V17H12V16.5H19C20.9 16.5 22 15 22 12.5 22 10 20.9 8.5 19 8.5H17.5V11C17.5 13 16.2 14.5 14 14.5H10C8.1 14.5 7 15.6 7 17.5V19C7 20.8 8.8 22 12 22ZM13.5 18.5C13.5 19 13.2 19.5 12.5 19.5 11.8 19.5 11.5 19 11.5 18.5 11.5 18 11.8 17.5 12.5 17.5 13.2 17.5 13.5 18 13.5 18.5Z" fill="rgba(255,255,255,0.7)"/></svg>`,
@@ -53,6 +54,12 @@ const ICONS = {
   sql: `<text>SQL</text>`,
   r: `<text>R</text>`,
   chart: `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
+  // Bottom nav icons
+  home: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  bookOpen: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  zap: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  timer: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/></svg>`,
+  folder: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
 };
 
 function getIconOverlay(iconKey) {
@@ -67,7 +74,9 @@ function getIconOverlay(iconKey) {
 // ── State ─────────────────────────────────────────────────────────────────────
 
 const state = {
-  view: 'tracks',       // 'tracks' | 'track'
+  section: 'home',
+  view: 'section',     // 'section' | 'article' | 'tracks' | 'track'
+  activeArticle: null,
   activeTrack: null,
   filter: 'Главное',
   search: '',
@@ -80,8 +89,132 @@ const state = {
 const $app = document.getElementById('app');
 
 function render() {
-  if (state.view === 'tracks') renderTracksView(true);
-  else renderTrackView();
+  switch (state.view) {
+    case 'tracks': renderTracksView(true); break;
+    case 'track':  renderTrackView();      break;
+    case 'article': renderArticleView();   break;
+    default:       renderSectionView();
+  }
+}
+
+// ── Bottom Navigation ─────────────────────────────────────────────────────────
+
+const NAV_ITEMS = [
+  { id: 'home',       label: 'Главная',   icon: 'home' },
+  { id: 'learning',   label: 'Обучение',  icon: 'bookOpen' },
+  { id: 'intensives', label: 'Интенсивы', icon: 'zap' },
+  { id: 'sprints',    label: 'Спринты',   icon: 'timer' },
+  { id: 'projects',   label: 'Проекты',   icon: 'folder' },
+];
+
+function navHtml() {
+  return `<nav class="bottom-nav">${NAV_ITEMS.map(n => `
+    <button class="nav-item${state.section === n.id ? ' active' : ''}" data-section="${n.id}">
+      <span class="nav-icon">${ICONS[n.icon]}</span>
+      <span class="nav-label">${n.label}</span>
+    </button>`).join('')}</nav>`;
+}
+
+function bindNav() {
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const s = btn.dataset.section;
+      if (state.section === s && state.view === 'section') return;
+      state.section = s;
+      state.view = 'section';
+      state.activeArticle = null;
+      state.activeTrack = null;
+      state.expandedCourse = null;
+      state.descExpanded = false;
+      render();
+    });
+  });
+}
+
+// ── Section View ──────────────────────────────────────────────────────────────
+
+function renderSectionView() {
+  const sd = SITE_MAP[state.section];
+
+  const groups = sd.groups.map(g => {
+    const header = g.title ? `<div class="list-group-header">${g.title}</div>` : '';
+    const items = g.items.map(item => `
+      <div class="list-item" data-id="${item.id}" data-action="${item.action || 'article'}">
+        <div class="list-item-text">
+          <span class="list-item-title">${item.title}</span>
+          ${item.subtitle ? `<span class="list-item-sub">${item.subtitle}</span>` : ''}
+        </div>
+        <span class="list-chevron">${ICONS.chevronRight}</span>
+      </div>`).join('');
+    return `<div class="list-group">${header}<div class="list-group-items">${items}</div></div>`;
+  }).join('');
+
+  $app.innerHTML = `
+    <div class="app-shell">
+      <div class="view active fade-enter">
+        <header class="header">
+          <div class="header-spacer"></div>
+          <h1 class="header-title">${sd.title}</h1>
+          <div class="header-spacer"></div>
+        </header>
+        <div class="section-content">${groups}</div>
+        ${navHtml()}
+      </div>
+    </div>`;
+
+  document.querySelectorAll('.list-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.dataset.action === 'tracks') {
+        state.view = 'tracks';
+        render();
+      } else {
+        state.activeArticle = el.dataset.id;
+        state.view = 'article';
+        render();
+      }
+    });
+  });
+
+  bindNav();
+}
+
+// ── Article View ──────────────────────────────────────────────────────────────
+
+function renderArticleView() {
+  const sd = SITE_MAP[state.section];
+  let item = null;
+  for (const g of sd.groups) {
+    item = g.items.find(i => i.id === state.activeArticle);
+    if (item) break;
+  }
+
+  const content = CONTENT && CONTENT[state.activeArticle];
+  const bodyHtml = content
+    ? content.map(p => `<p class="article-body-p">${p}</p>`).join('')
+    : '<p class="article-placeholder">Статья в разработке</p>';
+
+  $app.innerHTML = `
+    <div class="app-shell">
+      <div class="view active fade-enter">
+        <header class="header">
+          <button class="btn-back" id="btn-back">${ICONS.back}</button>
+          <h1 class="header-title">${item ? item.title : ''}</h1>
+          <div class="header-spacer"></div>
+        </header>
+        <div class="article-content">
+          ${bodyHtml}
+        </div>
+        ${navHtml()}
+      </div>
+    </div>`;
+
+  document.getElementById('btn-back').addEventListener('click', () => {
+    state.view = 'section';
+    state.activeArticle = null;
+    render();
+  });
+
+  bindNav();
 }
 
 // ── Tracks list view ──────────────────────────────────────────────────────────
@@ -112,8 +245,8 @@ function renderTracksView(animate, swipeDir) {
     <div class="app-shell">
       <div class="view active${animate ? ' fade-enter' : ''}">
         <header class="header">
-          <div class="header-spacer"></div>
-          <h1 class="header-title">Tracks</h1>
+          <button class="btn-back" id="btn-back">${ICONS.back}</button>
+          <h1 class="header-title">Треки</h1>
           <div class="header-spacer"></div>
         </header>
         <div class="search-wrap">
@@ -124,10 +257,10 @@ function renderTracksView(animate, swipeDir) {
         </div>
         <div class="filter-wrap">${filterBtns}</div>
         <div class="tracks-list">${cards}</div>
+        ${navHtml()}
       </div>
     </div>`;
 
-  // Paint thumbnails
   filtered.forEach(t => {
     const wrap = document.getElementById(`thumb-list-${t.id}`);
     if (wrap) {
@@ -136,13 +269,17 @@ function renderTracksView(animate, swipeDir) {
     }
   });
 
-  // Slide-in animation after filter swipe
   if (swipeDir) {
     const list = document.querySelector('.tracks-list');
     if (list) list.classList.add(swipeDir === 'left' ? 'slide-from-right' : 'slide-from-left');
   }
 
-  // Events
+  document.getElementById('btn-back').addEventListener('click', () => {
+    state.section = 'learning';
+    state.view = 'section';
+    render();
+  });
+
   document.getElementById('search-input').addEventListener('input', e => {
     state.search = e.target.value;
     renderTracksView(false);
@@ -168,6 +305,8 @@ function renderTracksView(animate, swipeDir) {
       render();
     });
   });
+
+  bindNav();
 }
 
 // ── Track detail view ─────────────────────────────────────────────────────────
@@ -231,28 +370,25 @@ function renderTrackView() {
         <div class="bottom-cta">
           <button class="btn-track-start">Start Track</button>
         </div>
+        ${navHtml()}
       </div>
     </div>`;
 
-  // Hero thumbnail
   const heroWrap = document.getElementById('thumb-hero');
   const heroCanvas = makeThumbnail(track, 320);
   heroWrap.insertBefore(heroCanvas, heroWrap.firstChild);
 
-  // Back button
   document.getElementById('btn-back').addEventListener('click', () => {
     state.view = 'tracks';
     render();
   });
 
-  // Read more
   document.getElementById('read-more-btn').addEventListener('click', () => {
     state.descExpanded = !state.descExpanded;
     document.getElementById('track-desc').classList.toggle('clamped', !state.descExpanded);
     document.getElementById('read-more-btn').textContent = state.descExpanded ? 'Show Less' : 'Read More';
   });
 
-  // Course accordion
   document.querySelectorAll('.course-card').forEach(card => {
     card.querySelector('.course-header').addEventListener('click', () => {
       const idx = parseInt(card.dataset.idx, 10);
@@ -263,7 +399,6 @@ function renderTrackView() {
     });
   });
 
-  // Start learning buttons
   document.querySelectorAll('.btn-start').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
@@ -271,10 +406,11 @@ function renderTrackView() {
     });
   });
 
-  // Start track button
   document.querySelector('.btn-track-start').addEventListener('click', () => {
     showToast('Starting track: ' + track.title);
   });
+
+  bindNav();
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -287,7 +423,8 @@ function showToast(msg) {
   toast.id = 'toast';
   toast.textContent = msg;
   Object.assign(toast.style, {
-    position: 'fixed', bottom: '90px', left: '50%', transform: 'translateX(-50%)',
+    position: 'fixed', bottom: 'calc(var(--nav-h, 60px) + 20px)', left: '50%',
+    transform: 'translateX(-50%)',
     background: 'rgba(17,24,39,0.9)', color: '#fff', padding: '10px 20px',
     borderRadius: '999px', fontSize: '14px', fontWeight: '500',
     zIndex: '100', whiteSpace: 'nowrap', maxWidth: '90vw',
@@ -315,12 +452,11 @@ function setupSwipe() {
     const dx = e.touches[0].clientX - x0;
     const dy = e.touches[0].clientY - y0;
 
-    // Determine axis once we have 12px of movement
     if (axis === null && Math.hypot(dx, dy) > 12) {
       axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
     }
     if (axis !== 'h') return;
-    e.preventDefault(); // block scroll while tracking horizontal drag
+    e.preventDefault();
 
     if (state.view === 'tracks') {
       const list = document.querySelector('.tracks-list');
@@ -346,7 +482,6 @@ function setupSwipe() {
       const list = document.querySelector('.tracks-list');
 
       if (canNext || canPrev) {
-        // Snap current list out, then slide new one in
         busy = true;
         if (list) {
           list.style.transition = 'transform 0.16s ease-in, opacity 0.16s ease-in';
@@ -360,7 +495,6 @@ function setupSwipe() {
           busy = false;
         }, 160);
       } else {
-        // Snap back
         if (list) {
           list.style.transition = 'transform 0.22s ease, opacity 0.22s ease';
           list.style.transform = '';
